@@ -1,0 +1,32 @@
+---
+title: "Homework 3 solutions"
+author: "Zichen Shu"
+output: github_document
+
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+
+theme_set(theme_minimal() + theme(legend.position = "botton"))
+
+options(
+  ggplot2.continuous.color = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_color_discrete = scale_color_viridis_d
+scale_fill_discrete = scale_color_viridis_d
+```
+
+## Problem 1
+
+
+
+
+
+
+
+
+
+
