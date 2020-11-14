@@ -7,6 +7,7 @@ output: github_document
 
 ```{r setup, include = FALSE}
 library(tidyverse)
+library(ggplot2)
 
 theme_set(theme_minimal() + theme(legend.position = "botton"))
 
@@ -90,6 +91,76 @@ results_df %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 ```
+
+## Problem 2
+
+```{r, message = FALSE}
+path_df = 
+  tibble(path = list.files("lda_data"),) %>% 
+  mutate(path = str_c("lda_data/", path),
+         map_df(path, read_csv)
+    ) %>% 
+  separate(path, into = c("lda", "subject_id"), sep = "/") %>% 
+  separate(subject_id, into = c("subject_id", "csv"), sep = "\\.") %>% 
+  select(-lda, -csv) %>% 
+  pivot_longer(week_1:week_8, 
+               names_to = "week",
+               values_to = "value")
+```
+
+
+```{r}
+path_df %>% 
+  group_by(subject_id) %>% 
+  summarize(
+    mean = mean(value)
+  ) %>% 
+  knitr::kable()
+  
+  
+path_df %>% 
+  ggplot(aes(x = week, y = value, group = subject_id, color = subject_id))+
+  geom_line(alpha = 0.5)+
+  theme(legend.position = "right")
+```
+
+## Problem 3
+
+```{r}
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Input must be numeric")
+  }
+  
+  if (length(x) < 3) {
+    stop("Input must have at least three numbers")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  tibble(
+    mean = mean_x,
+    sd = sd_x
+  )
+  
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
